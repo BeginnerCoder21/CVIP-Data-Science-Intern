@@ -1,9 +1,8 @@
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score
 from sklearn.pipeline import Pipeline
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
@@ -49,11 +48,10 @@ def load_data(test_size=0.2):
 # Load and split the dataset
 x_train, x_test, y_train, y_test = load_data(test_size=0.25)
 print((x_train.shape[0], x_test.shape[0]))
-# Build MLP classifier
-#mlp_classifier = MLPClassifier(hidden_layer_sizes=(128, 64), activation='relu', max_iter=1000, random_state=9)
 
+# Build MLP classifier
 mlp_classifier = Pipeline([
-    ('scaler', StandardScaler()),  # Standardize features
+    ('scaler', StandardScaler()), 
     ('mlp', MLPClassifier(
         hidden_layer_sizes=(256, 128),
         activation='relu',
@@ -75,6 +73,11 @@ y_pred = mlp_classifier.predict(x_test)
 accuracy = accuracy_score(y_test, y_pred)
 accuracy=accuracy*100
 print("Accuracy: ", accuracy,"%")
+
+#Precision
+# precision = precision_score(y_test, y_pred)
+# precision=precision*100
+# print("Precision: ", precision,"%")
 
 cm = confusion_matrix(y_test, y_pred, labels=app.observed_emotions)
 

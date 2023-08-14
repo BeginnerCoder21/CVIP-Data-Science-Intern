@@ -4,10 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import prediction 
 import os
-import librosa.display
-from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import ConfusionMatrixDisplay
 
-st.title("Speech Emotion Detector")
+st.title("Speech Emotion Recognition")
 st.divider()
 # Emotions in the RAVDESS dataset
 emotions = {
@@ -80,6 +79,8 @@ elif option == "Select File":
             st.header(predict[0].capitalize())
             st.subheader(f"Accuracy of prediction:")
             st.header(f"{prediction.accuracy:.2f}%")
+            # st.subheader(f"Precision of prediction:")
+            # st.header(f"{prediction.precision:.2f}%")
             st.title("Confusion Matrix")
             fig, ax = plt.subplots(figsize=(6, 6))
             disp = ConfusionMatrixDisplay(confusion_matrix=prediction.cm, display_labels=observed_emotions)
